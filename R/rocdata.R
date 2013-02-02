@@ -15,7 +15,8 @@ rocdata <- function(grp, pred){
     stop("There must only be 2 values for the classifier")
   }
   
-  cut <- unique(pred)
+  #cut <- sort(unique(pred))
+  cut <- (c(-Inf, sort(unique(pred))) + c(sort(unique(pred)), +Inf))/2 # pROC thresholds
   tp <- sapply(cut, function(x) length(which(pred > x & grp == levels(grp)[2])))
   fn <- sapply(cut, function(x) length(which(pred < x & grp == levels(grp)[2])))
   fp <- sapply(cut, function(x) length(which(pred > x & grp == levels(grp)[1])))
@@ -47,3 +48,4 @@ rocdata <- function(grp, pred){
   )
   
   return (list(roc = roc, stats = stats))
+}
