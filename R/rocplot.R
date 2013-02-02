@@ -5,9 +5,9 @@ rocplot.single <- function(grp, pred, title = "ROC Plot", p.value = FALSE){
   plotdata <- rocdata(grp, pred)
   
   if (p.value == TRUE){
-    annotation <- with(plotdata$stats, paste("AUC=",signif(auc, 2), " (P=", signif(p.value, 2), ")", sep=""))
+    annotation <- with(plotdata$stats, paste("AUC=",signif(auc, 4), " (P=", signif(p.value, 2), ")", sep=""))
   } else {
-    annotation <- with(plotdata$stats, paste("AUC=",signif(auc, 2), " (95%CI ", signif(ci.upper, 2), " - ", signif(ci.lower, 2), ")", sep=""))
+    annotation <- with(plotdata$stats, paste("AUC=",signif(auc, 4), " (95%CI ", signif(ci.upper, 2), " - ", signif(ci.lower, 2), ")", sep=""))
   }
   
   p <- ggplot(plotdata$roc, aes(x = x, y = y)) +
@@ -33,7 +33,7 @@ rocplot.single <- function(grp, pred, title = "ROC Plot", p.value = FALSE){
 
 
 
-rocplot.multiple <- function(test.data.list, groupName = "grp", predName = "res", title = "ROC Plot", p.value = TRUE){
+rocplot.multiple <- function(test.data.list, groupName = "grp", predName = "res", title = "ROC Plot", p.value = FALSE){
   # Plots multiple ROC curves on the same plot area using ggplot2
   
   require(plyr)
